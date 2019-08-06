@@ -9,9 +9,17 @@ class Board extends React.Component {
         };
     }
     renderSquare(i) {
-        return <Square value={this.props.squares[i]} className={this.props.classNames[i]} key={i}
-            onClick={() => this.props.onClick(i)}
-        />;
+        let winners = null;
+        let winSetClass = "";
+        if (this.props.winners) {
+            winners = this.props.winners;
+            if (winners[0] === i || winners[1] === i || winners[2] === i) {
+                winSetClass = " square-win";
+            }
+        }
+        return <Square value={this.props.squares[i]} 
+        className={this.props.classNames[i] + winSetClass} key={i}
+            onClick={() => this.props.onClick(i)}/>;
     }
 
     render() {

@@ -75,7 +75,7 @@ class Game extends React.Component {
     render() {
         const history = this.state.history;
         const current = history[this.state.stepNumber];
-        const winner = calculateWinner(current.squares);
+        const winners = calculateWinner(current.squares);
         const moves = history.map((step, move) => {
             const currentLocation = step.currentLocation ? `(${step.currentLocation})` : '';
             const desc = move ? 'Go to move #' + move : 'Go to game start';
@@ -86,8 +86,10 @@ class Game extends React.Component {
             );
         });
         let status;
-        if (winner) {
-            status = "Winner: " + winner;
+        if (winners) {
+            status = "Winner: " + current.squares[winners[0]];
+            //When someone wins, highlight the three squares that caused the win.
+            console.log(winners);
         } else {
             status = "Next player: " + (this.state.xIsNext ? 'X' : 'O');
         }
@@ -98,6 +100,7 @@ class Game extends React.Component {
                         squares={current.squares}
                         onClick={(i) => this.handleClick(i)}
                         classNames={this.state.classNames}
+                        winners={winners? winners : null}
                     />
                 </div>
                 <div className="game-info">
