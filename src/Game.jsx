@@ -88,10 +88,13 @@ class Game extends React.Component {
         let status;
         if (winners) {
             status = "Winner: " + current.squares[winners[0]];
-            //When someone wins, highlight the three squares that caused the win.
-            console.log(winners);
         } else {
-            status = "Next player: " + (this.state.xIsNext ? 'X' : 'O');
+            if (history.length === current.squares.length+1) {
+                status = 'A draw - no one wins!';
+            } else {
+                status = "Next player: " + (this.state.xIsNext ? 'X' : 'O');
+            }
+            
         }
         return (
             <div className="game">
