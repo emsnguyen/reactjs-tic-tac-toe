@@ -1,6 +1,7 @@
 import React from "react";
 import Board from "./Board";
 import { calculateWinner } from "./calculateWinner";
+import ToggleButton from "./ToggleButton";
 
 const getLocation = (move) => {
     const locationMap = {
@@ -37,6 +38,7 @@ class Game extends React.Component {
             xIsNext: true,
             stepNumber: 0,
             classNames: Array(9).fill("square"),
+            isDescending: false,
         };
     }
     jumpTo(step) {
@@ -61,6 +63,12 @@ class Game extends React.Component {
             stepNumber: history.length,
             xIsNext: !this.state.xIsNext,
             classNames: updateArrayValueGivenIndex(this.state.classNames, i, "square-bold", "square"),
+            
+        });
+    }
+    handleToggleClick(value) {
+        this.setState({
+            isDescending: !this.state.isDescending,
         });
     }
 
@@ -94,7 +102,9 @@ class Game extends React.Component {
                 </div>
                 <div className="game-info">
                     <div>{status}</div>
-                    <ol>{moves}</ol>
+                    {/* toggle button here */}
+                    <div><ToggleButton value={this.state.isDescending} onClick={(value)=>this.handleToggleClick(this.state.sortType)}/></div>
+                    <ol>{this.state.isDescending ? moves : moves.reverse()}</ol>
                 </div>
             </div>
         )
